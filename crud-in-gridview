@@ -228,12 +228,13 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
-<%-- Connection String in Web.config file --%>
+<%-- Connection String in Web.config file Just after <configuration> --%>
+
 <connectionStrings>  
-    <add name="dbconn" connectionString="Data Source=DESKTOP-RGVABTR\KHALID;Integrated Security=true;Initial Catalog=CrudInGridView;" providerName="System.Data.SqlClient" />   
+    <add name="dbconn" connectionString="Data Source=DESKTOP-RGVABTR\KHALID;Initial Catalog=CrudInGridView;User ID=sa;Password=123" providerName="System.Data.SqlClient" />
 </connectionStrings>
 
-//Get connection string from web.config file  
+//Get connection string from web.config file from .cs pages 
 string strcon = ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString;  
 
 SqlConnection cnn = new SqlConnection(strcon);
