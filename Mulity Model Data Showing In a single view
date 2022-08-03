@@ -1,3 +1,6 @@
+====================================================
+MULTY MODEL DATA SHOWING IN SINGLE VIEW WITH A CLASS
+====================================================
 //Creating A Class In Model Folders
 
 public class MultiModelShow
@@ -52,7 +55,7 @@ public ActionResult Index()
   </tr>
 
 
-@foreach (var item in Model)
+@foreach (var item in Model.my_students))
     {
     <tr>
            <td>@item.ID</td>
@@ -62,6 +65,98 @@ public ActionResult Index()
     </tr>
     }
 </table>
+----------------------------------------------------
+
+====================================================
+MULTY MODEL DATA SHOWING IN SINGLE VIEW WITH ViewBag
+====================================================
+
+public ActionResult Index()
+{   
+    var std =  getStudent();
+    var tech =  getTeacher();
+    
+    ViewBag.student = std;
+    ViewBag.teacher = tech;
+
+    return View();
+
+}
+
+//Showing Data In the view page
+@foreach (var item in ViewBag.student))
+----------------------------------------------------
+
+====================================================
+MULTY MODEL DATA SHOWING IN SINGLE VIEW WITH ViewData
+====================================================
+public ActionResult Index()
+{   
+    var std =  getStudent();
+    var tech =  getTeacher();
+    
+    ViewBag["student"] = std;
+    ViewBag["teacher"] = tech;
+
+    return View();
+
+}
+
+//Showing Data In the view page
+@foreach (var item in (List<student>)ViewBag["student"]))
+
+----------------------------------------------------
+
+====================================================
+MULTY MODEL DATA SHOWING IN SINGLE VIEW WITH Partial View
+====================================================
+
+public ActionResult Index()
+{   
+    var std =  getStudent();
+    var tech =  getTeacher();
+
+    return View();
+
+}
+
+//RenderAction() Method for partial view with multy models
+public PartialViewResult Students()
+{
+    var std = getStudent();
+    return PartialView("_student", std);
+}
+
+public PartialViewResult Teachers()
+{
+    var tech = getTeacher();
+    return PartialView("_teacher", tech);
+}
 
 
-------------------------------------------------------------------
+
+public List<student> getStudent()
+{
+    return db.students.ToList();
+}
+
+public List<teacher> getTeacher()
+{
+    return db.teachers.ToList();
+}
+
+
+//In the Partial View
+@model IEnumerable<DisplayingMultipleModelsData.Models.student>
+
+@foreach (var item in Model)
+
+//In the view page showing Partal View with RenderAction method
+@{
+    Html.RenderAction("Students");
+}
+
+@{
+    Html.RenderAction("Teachers");
+}
+
