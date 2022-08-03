@@ -1,0 +1,67 @@
+//Creating A Class In Model Folders
+
+public class MultiModelShow
+    {
+        public List<student> my_students { get; set; }
+        public List<teacher> my_teachers { get; set; }
+    }
+
+//Adding Object of Entity Context Class in HomeController
+
+DMMDIASVEntities db = new DMMDIASVEntities();
+public ActionResult Index()
+{   
+    var std =  getStudent();
+    var tech =  getTeacher();
+
+    MultiModelShow data = new MultiModelShow();
+
+    data.my_students = std;
+    data.my_teachers = tech;
+
+    return View(data);
+
+}  
+
+//Action Method in Controller
+
+  public List<student> getStudent()
+  {
+      return db.students.ToList();
+  }
+
+  public List<teacher> getTeacher()
+  {
+      return db.teachers.ToList();
+  }
+
+//In view file top
+
+@using DisplayingMultipleModelsData.Models
+@model MultiModelShow
+
+//Showing Data In the view page
+
+<h1>Student Info</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Coctact Number</th>
+    <th>Addres</th>
+  </tr>
+
+
+@foreach (var item in Model)
+    {
+    <tr>
+           <td>@item.ID</td>
+           <td>@item.Name</td>
+           <td>@item.ContactNumber</td>
+           <td>@item.Address</td>
+    </tr>
+    }
+</table>
+
+
+------------------------------------------------------------------
